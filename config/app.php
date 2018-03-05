@@ -150,8 +150,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
 
         /*
          * Application Service Providers...
@@ -162,6 +160,9 @@ return [
         Leslie\Providers\EventServiceProvider::class,
         Leslie\Providers\RouteServiceProvider::class,
 
+
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        'PragmaRX\Tracker\Vendor\Laravel\ServiceProvider',
     ],
 
     /*
@@ -207,6 +208,7 @@ return [
         'Schema' => Illuminate\Support\Facades\Schema::class,
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,
+        'Tracker' => 'PragmaRX\Tracker\Vendor\Laravel\Facade',
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
