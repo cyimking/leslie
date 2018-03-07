@@ -8,7 +8,7 @@ use Leslie\Jobs\ProductImport;
 use Leslie\Product;
 use Leslie\Repositories\Product\ProductRepository;
 
-class Import extends Command
+class ImportCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -47,6 +47,6 @@ class Import extends Command
      */
     public function handle()
     {
-        ProductImport::dispatch( $this->products);
+        ProductImport::dispatch($this->products);
     }
 }

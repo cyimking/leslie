@@ -11,6 +11,11 @@ interface ProductRepository
     public function paginate($perPage);
 
     /**
+     * @return mixed
+     */
+    public function findAll();
+
+    /**
      * @param $productID
      * @return mixed
      */
@@ -34,4 +39,10 @@ interface ProductRepository
      * @return mixed
      */
     public function delete($productID);
+
+    /**
+     * @param string $query
+     * @return mixed
+     */
+    public function search($query = '');
 }

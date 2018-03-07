@@ -50,8 +50,8 @@ return [
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            'strict' => true,
-            'engine' => null,
+            'strict' => false,
+            'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
         ],
 
         'tracker' => [
@@ -66,7 +66,7 @@ return [
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'strict' => false,
-            'engine' => null,
+            'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
         ],
 
         'pgsql' => [
