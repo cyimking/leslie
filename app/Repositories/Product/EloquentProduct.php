@@ -19,6 +19,14 @@ class EloquentProduct implements ProductRepository
     /**
      * {@inheritdoc}
      */
+    public function findAll()
+    {
+        return Product::all();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find($productID)
     {
         return Product::with('images')->where('product_id', $productID)
@@ -73,5 +81,15 @@ class EloquentProduct implements ProductRepository
         $product = $this->find($productID);
 
         return $product->delete();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function search($query = '')
+    {
+        return (new Product)->where('body', 'like', "%{$query}%")
+            ->orWhere('title', 'like', "%{$query}")
+            ->get();
     }
 }

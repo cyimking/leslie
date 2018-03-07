@@ -3,7 +3,11 @@
 namespace Leslie\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Leslie\Jobs\ProductImport;
+use Leslie\Repositories\Product\ProductRepository;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +20,7 @@ class Kernel extends ConsoleKernel
 
     ];
 
+
     /**
      * Define the application's command schedule.
      *
@@ -26,6 +31,9 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('inspire')
                   ->hourly();
+
+         $schedule->command('product:import')
+                  ->cron('0 */4 * * *');
     }
 
     /**

@@ -1,27 +1,26 @@
 <?php
 
-namespace Leslie\Console\Commands\Product;
+namespace Leslie\Jobs;
 
 use GuzzleHttp\Client;
-use Illuminate\Console\Command;
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Leslie\Product;
 use Leslie\Repositories\Product\ProductRepository;
 
-class ProductImport extends Command
+class ProductImport implements ShouldQueue
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'product:import';
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The console command description.
+     * The number of seconds the job can run before timing out.
      *
-     * @var string
+     * @var int
      */
-    protected $description = 'Import products from Leslie\'s API';
+    public $timeout = 300;
 
     /**
      * @var ProductRepository
@@ -34,25 +33,24 @@ class ProductImport extends Command
     private $client;
 
     /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @param ProductRepository $products
-     * @param Client $client
      */
-    public function __construct(ProductRepository $products, Client $client)
+    public function __construct(ProductRepository $products)
     {
-        parent::__construct();
         $this->products = $products;
-        $this->client = $client;
     }
 
     /**
-     * Execute the console command.
+     * Execute the job.
      *
-     * @return mixed
+     * @return void
      */
     public function handle()
     {
+        $this->client = new Client();   // Laravel will try to serialize the class properties
+
         // Retrieve existing ids from DB
         $existing_ids = Product::all()->pluck('product_id')->all();
 

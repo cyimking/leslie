@@ -2,7 +2,10 @@
 
 namespace Leslie\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Leslie\Observers\Product\ElasticsearchObserver;
+use Leslie\Product;
 use Leslie\Repositories\Product\EloquentProduct;
 use Leslie\Repositories\Product\ProductRepository;
 
@@ -15,7 +18,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Schema::defaultStringLength(191);
+        Product::observe(ElasticsearchObserver::class);
     }
 
     /**
