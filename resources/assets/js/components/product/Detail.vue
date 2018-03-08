@@ -1,12 +1,14 @@
 <template>
     <div>
         <!--Breadcrumb-->
-        <b-breadcrumb :items="items"/>
+        <b-row>
+            <b-breadcrumb :items="items"/>
+        </b-row>
         <!--./Breadcrumb-->
 
         <!--Header-->
         <b-row>
-            <h1 class="mt-3">Details</h1>
+            <h1 class="pl-0 pt-4 pr-4 pb-4">Details</h1>
         </b-row>
         <!--./Header-->
 

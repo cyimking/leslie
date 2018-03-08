@@ -1,12 +1,14 @@
 <template>
     <div>
         <!--Breadcrumb-->
-        <b-breadcrumb :items="items"/>
+        <b-row>
+            <b-breadcrumb :items="items"/>
+        </b-row>
         <!--./Breadcrumb-->
 
         <!--Header-->
         <b-row>
-            <h1 class="p-4">Product Directory</h1>
+            <h1 class="pl-0 pt-4 pr-4 pb-4">Product Directory</h1>
         </b-row>
         <!--./Header-->
 
@@ -27,7 +29,7 @@
         <!--./Errors-->
 
         <!--Products-->
-        <div v-show="successfulCall"  class="w-100">
+        <b-row v-show="successfulCall"  class="w-100">
             <!--Uh oh-->
             <b-jumbotron v-if="products.length <= 0 && !productsSearch"  header="Uh Oh!" lead="Empty product feed..." ></b-jumbotron>
             <!--./Uh oh-->
@@ -92,7 +94,7 @@
                 </b-media>
             </b-card>
             <!--./Product Search  Listing-->
-        </div>
+        </b-row>
         <!--./Products-->
 
          <!--Pagination-->

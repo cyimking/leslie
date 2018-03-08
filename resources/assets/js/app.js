@@ -15,6 +15,8 @@ Vue.use(VueAxios, axios);
 import App from './App.vue';
 import ProductDetail from './components/product/Detail.vue';
 import ProductListing from './components/product/Listing.vue';
+import TrackerTraffic from './components/tracker/Visitors';
+import TrackerTrafficByID from './components/tracker/VisitorsByID';
 
 /**
  * Require bootstrap
@@ -44,6 +46,16 @@ const routes = [
         path: '/products/:id',
         name: 'ProductDetail',
         component: ProductDetail
+    },
+    {
+        path: '/analytics/traffic',
+        name: 'TrackerTraffic',
+        component: TrackerTraffic
+    },
+    {
+        path: '/analytics/traffic/:id',
+        name: 'TrackerTrafficByID',
+        component: TrackerTrafficByID
     }
 ];
 

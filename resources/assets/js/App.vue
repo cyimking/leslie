@@ -22,7 +22,7 @@
                                     Analytics
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarAnalyticsDropdown">
-                                    <a class="dropdown-item" href="#">Traffic</a>
+                                    <router-link :to="{ name: 'TrackerTraffic' }" class="dropdown-item">Traffic</router-link>
                                 </div>
                             </li>
                         </ul>
