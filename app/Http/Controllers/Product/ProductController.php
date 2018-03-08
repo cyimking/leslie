@@ -13,6 +13,11 @@ class ProductController extends Controller
      */
     private $products;
 
+    /**
+     * ProductController constructor.
+     *
+     * @param ProductRepository $products
+     */
     public function __construct(ProductRepository $products)
     {
         $this->products = $products;
@@ -21,13 +26,14 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = $this->products->paginate(10);
 
-        return response()->json($products);
+        return $request->isJson() ? response()->json($products) : view('layouts.app');
     }
 
     /**
@@ -54,14 +60,15 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
+     * @param Request $request
      * @return string
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $product = $this->products->find($id);
 
-        return response()->json($product);
+        return $request->isJson() ? response()->json($product) : view('layouts.app');
     }
 
     /**
@@ -96,5 +103,19 @@ class ProductController extends Controller
     public function destroy($id)
     {
         // Not used...
+    }
+
+    /**
+     * Elastic Search function
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        $query = $request->all('q');
+        $products = $this->products->search($query['q']);
+
+        return response()->json($products);
     }
 }

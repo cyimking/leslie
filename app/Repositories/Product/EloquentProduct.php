@@ -2,11 +2,18 @@
 
 namespace Leslie\Repositories\Product;
 
+use Elasticsearch\Client;
+use Elasticsearch\ClientBuilder;
+use Illuminate\Support\Collection;
 use Leslie\Product;
 use Leslie\ProductImage;
 
 class EloquentProduct implements ProductRepository
 {
+    /**
+     * @var Client
+     */
+    private $elasticsearch;
 
     /**
      * {@inheritdoc}
@@ -30,7 +37,7 @@ class EloquentProduct implements ProductRepository
     public function find($productID)
     {
         return Product::with('images')->where('product_id', $productID)
-            ->first();
+            ->firstOrFail();
     }
 
     /**
@@ -88,8 +95,31 @@ class EloquentProduct implements ProductRepository
      */
     public function search($query = '')
     {
-        return (new Product)->where('body', 'like', "%{$query}%")
-            ->orWhere('title', 'like', "%{$query}")
-            ->get();
+        $this->elasticsearch = ClientBuilder::create()->build();
+
+        //searchOnElasticSearch
+        $items = $this->elasticsearch->search([
+            'index' => 'products',
+            'type' => 'products',
+            'body' => [
+                'query' => [
+                    'query_string' => [
+                        'query' => $query
+                    ]
+                ]
+            ]
+        ]);
+
+        $results = $items['hits']['hits'];
+
+        return Collection::make(array_map(function ($r) {
+            $product = new Product();
+            $product->newInstance($r['_source'], true);
+            $product->setRawAttributes($r['_source'], true);
+            return $product;
+        }, $results));
+//        return (new Product)->where('body', 'like', "%{$query}%")
+//            ->orWhere('title', 'like', "%{$query}")
+//            ->get();
     }
 }

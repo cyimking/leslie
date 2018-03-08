@@ -12,7 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.app');
 });
 
+Route::resource('products', 'Product\ProductController', ['only' => [
+    'index', 'show'
+]]);
+
+Route::get('analytics/traffic', 'TrackerController@visitors')
+    ->name('analytics.traffic');
+
+Route::get('analytics/traffic/{id}', 'TrackerController@visitorsBySessionId')
+    ->name('analytics.traffic.id');
 
