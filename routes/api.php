@@ -20,3 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('products', 'Product\ProductController', ['only' => [
     'index', 'show'
 ]]);
+
+Route::get('products/search/query', 'Product\ProductController@search')
+    ->name('products.search');

@@ -104,4 +104,18 @@ class ProductController extends Controller
     {
         // Not used...
     }
+
+    /**
+     * Elastic Search function
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        $query = $request->all('q');
+        $products = $this->products->search($query['q']);
+
+        return response()->json($products);
+    }
 }
