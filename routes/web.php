@@ -12,7 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.app');
 });
 
+Route::resource('products', 'Product\ProductController', ['only' => [
+    'index', 'show'
+]]);
 

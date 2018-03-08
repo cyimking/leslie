@@ -4,19 +4,57 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
 
-require('./bootstrap');
+import VueAxios from 'vue-axios';
+import axios from 'axios';
+Vue.use(VueAxios, axios);
 
-window.Vue = require('vue');
+import App from './App.vue';
+import ProductDetail from './components/product/Detail.vue';
+import ProductListing from './components/product/Listing.vue';
 
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
+ * Require bootstrap
  */
+import BootstrapVue from 'bootstrap-vue'
+Vue.use(BootstrapVue);
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+require('./bootstrap');
 
-const app = new Vue({
-    el: '#app'
+/**
+ * Routes
+ */
+const routes = [
+    {
+        path: '/',
+        name: 'ProductListing',
+        component: ProductListing
+    },
+    {
+        path: '/products',
+        name: 'ProductListing',
+        component: ProductListing
+    },
+    {
+        path: '/products/:id',
+        name: 'ProductDetail',
+        component: ProductDetail
+    }
+];
+
+/**
+ * Register components
+ */
+Vue.component('pagination', require('laravel-vue-pagination'));
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: routes
 });
+
+new Vue(Vue.util.extend({ router }, App)).$mount('#app');

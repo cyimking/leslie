@@ -30,7 +30,7 @@ class EloquentProduct implements ProductRepository
     public function find($productID)
     {
         return Product::with('images')->where('product_id', $productID)
-            ->first();
+            ->firstOrFail();
     }
 
     /**
