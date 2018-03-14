@@ -8,7 +8,7 @@
 
         <!--Header-->
         <b-row>
-            <h1 class="pl-0 pt-4 pr-4 pb-4">Tracker - Traffic</h1>
+            <h1 class="pl-0 pt-4 pr-4 pb-4">Analytics - Traffic</h1>
         </b-row>
         <!--./Header-->
 

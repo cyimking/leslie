@@ -8,6 +8,8 @@ use Leslie\Observers\Product\ElasticsearchObserver;
 use Leslie\Product;
 use Leslie\Repositories\Product\EloquentProduct;
 use Leslie\Repositories\Product\ProductRepository;
+use Leslie\Repositories\Tracker\EloquentTracker;
+use Leslie\Repositories\Tracker\TrackerRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,5 +32,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(ProductRepository::class, EloquentProduct::class);
+        $this->app->singleton(TrackerRepository::class, EloquentTracker::class);
     }
 }

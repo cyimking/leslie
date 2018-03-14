@@ -8,7 +8,7 @@
 
         <!--Header-->
         <b-row>
-            <h1 class="pl-0 pt-4 pr-4 pb-4">Tracker - Traffic by Session ID</h1>
+            <h1 class="pl-0 pt-4 pr-4 pb-4">Analytics - Traffic by Session ID</h1>
         </b-row>
         <!--./Header-->
 
@@ -20,7 +20,7 @@
                     <th>Method</th>
                     <th>Timestamp</th>
                 </tr>
-                <tr v-for="log in logs">
+                <tr v-for="log in logs.data">
                     <td>{{ log.session_id }}</td>
                     <td>{{ log.path }}</td>
                     <td>{{ log.method }}</td>
@@ -29,6 +29,9 @@
             </table>
         </b-row>
 
+        <!--Pagination-->
+        <pagination :data="logs" v-on:pagination-change-page="fetchLogs"></pagination>
+        <!--./Pagination-->
     </div>
 </template>
 
@@ -60,13 +63,18 @@
         },
         created: function()
         {
-            this.fetchLogs();
+            this.fetchLogs(1);
         },
 
         methods: {
-            fetchLogs()
+            fetchLogs(page)
             {
-                let uri = 'http://127.0.0.1:8000/api/tracker/visitors/' + this.$route.params.id;
+                // Set page number to 1 by default
+                if(typeof page == 'undefinded') {
+                    page = 1;
+                }
+
+                let uri = 'http://127.0.0.1:8000/api/tracker/visitors/' + this.$route.params.id + '?page=' + page;
                 this.axios.get(uri, {
                     data: {},
                     contentType: 'application/json; charset=utf-8'
@@ -81,7 +89,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

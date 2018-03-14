@@ -24,8 +24,8 @@ Route::resource('products', 'Product\ProductController', ['only' => [
 Route::get('products/search/query', 'Product\ProductController@search')
     ->name('products.search');
 
-Route::get('tracker/visitors', 'TrackerController@visitors')
+Route::get('tracker/visitors', 'Tracker\TrackerController@visitors')
     ->name('tracker.visitors');
 
-Route::get('tracker/visitors/{id}', 'TrackerController@visitorsBySessionId')
+Route::get('tracker/visitors/{id}', 'Tracker\TrackerController@visitorsBySessionId')
     ->name('tracker.visitorsBySessionId');

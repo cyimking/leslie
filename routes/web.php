@@ -19,9 +19,9 @@ Route::resource('products', 'Product\ProductController', ['only' => [
     'index', 'show'
 ]]);
 
-Route::get('analytics/traffic', 'TrackerController@visitors')
+Route::get('analytics/traffic', 'Tracker\TrackerController@visitors')
     ->name('analytics.traffic');
 
-Route::get('analytics/traffic/{id}', 'TrackerController@visitorsBySessionId')
+Route::get('analytics/traffic/{id}', 'Tracker\TrackerController@visitorsBySessionId')
     ->name('analytics.traffic.id');
 

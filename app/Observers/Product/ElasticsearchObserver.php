@@ -33,7 +33,7 @@ class ElasticsearchObserver
     {
         $this->elasticsearch = ClientBuilder::create()->build();
 
-        $product->aboveground = (isset($product->aboveground) && $product->aboveground) ? "aboveground" : "belowground";
+        $product->aboveground = (isset($product->aboveground) && $product->aboveground) ? "above ground" : "below ground";
 
         $this->elasticsearch->index([
             'index' => 'products',

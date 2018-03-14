@@ -67,12 +67,13 @@ class EloquentProduct implements ProductRepository
         $product = $this->find($productID);
         $product->update($data);
 
+        // TODO - Decouple into separate function
         if (isset($data['images'])) {
-            foreach((array) $data['images'] as $image) {
-                $image1 = new ProductImage([
-                    'product_id' => $productID,
-                    'path' => $image
-                ]);
+            foreach((array) $data['images'] as $imagePath) {
+                $image1 = ProductImage::firstOrNew(
+                    ['product_id' => $productID],
+                    ['path' => $imagePath]
+                );
                 $product->images()->save($image1);
             }
         }
@@ -95,9 +96,8 @@ class EloquentProduct implements ProductRepository
      */
     public function search($query = '')
     {
-        $this->elasticsearch = ClientBuilder::create()->build();
+        $this->elasticsearch = ClientBuilder::create()->build();      //TODO - Make static interface
 
-        //searchOnElasticSearch
         $items = $this->elasticsearch->search([
             'index' => 'products',
             'type' => 'products',
@@ -118,8 +118,5 @@ class EloquentProduct implements ProductRepository
             $product->setRawAttributes($r['_source'], true);
             return $product;
         }, $results));
-//        return (new Product)->where('body', 'like', "%{$query}%")
-//            ->orWhere('title', 'like', "%{$query}")
-//            ->get();
     }
 }

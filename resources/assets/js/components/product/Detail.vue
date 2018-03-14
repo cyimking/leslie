@@ -26,7 +26,7 @@
         <!--./Product Details-->
 
         <!--Product Images-->
-        <b-row  v-if="product.images.length > 0">
+        <b-row v-if="product.images.length > 0">
             <h3 class="mt-3">Images</h3>
             <b-row class="mt-3">
                 <b-col cols="3" v-for="image in product.images" class="mb-3">
@@ -57,7 +57,9 @@
                         active: true
                     }
                 ],
-                product: {},
+                product: {
+                    images: {}
+                },
                 successfulCall: false,
                 unsuccessfulCall: false
             }
@@ -79,10 +81,8 @@
                     this.product = response.data;
                     this.items[2].text = this.product.name;
                     this.successfulCall = true;
-                    console.log(response);
                 }).catch((error) => {
                     this.unsuccessfulCall = false;
-                    console.log(error);
                 })
             }
         }

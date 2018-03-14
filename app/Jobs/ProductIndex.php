@@ -50,6 +50,7 @@ class ProductIndex implements ShouldQueue
         echo 'Indexing all products...' . PHP_EOL;
 
         foreach ((new Product)->cursor() as $product) {
+            $product->aboveground = (isset($product->aboveground) && $product->aboveground) ? "above ground" : "below ground";
             $this->elasticsearch->index([
                 'index' => 'products',
                 'type' => 'products',

@@ -30,70 +30,74 @@
 
         <!--Products-->
         <b-row v-show="successfulCall"  class="w-100">
-            <!--Uh oh-->
-            <b-jumbotron v-if="products.length <= 0 && !productsSearch"  header="Uh Oh!" lead="Empty product feed..." ></b-jumbotron>
+            <!--Uh Oh-->
+            <b-row v-if="this.pagination.total == 0"  class="w-100">
+                <b-jumbotron header="Uh Oh!" lead="Empty product feed..."  class="w-100"></b-jumbotron>
+            </b-row>
             <!--./Uh oh-->
 
-            <!--Query Search-->
-           <form method="get">
-               <div class="form-group">
-                   <label for="searchProducts" class="text-danger">
-                       <strong>Important:</strong>
-                       Click <code>[esc]</code> to search. Enter a blank value, click <code>[esc]</code> to reset.
-                   </label>
-                   <input
-                           id="searchProducts"
-                           name="q"
-                           @keyup.esc="searchProducts"
-                           type="text"
-                           v-model="search_query"
-                           class="form-control"
-                           placeholder="Enter search terms such as product name, description, type, etc..."
-                   />
-               </div>
-           </form>
-            <!--./Query Search-->
+            <b-row v-else class="w-100">
+                <!--Query Search-->
+                <form method="get">
+                    <div class="form-group">
+                        <label for="searchProducts" class="text-danger">
+                            <strong>Important:</strong>
+                            Click <code>[esc]</code> to search. Enter a blank value, click <code>[esc]</code> to reset.
+                        </label>
+                        <input
+                                id="searchProducts"
+                                name="q"
+                                @keyup.esc="searchProducts"
+                                type="text"
+                                v-model="search_query"
+                                class="form-control"
+                                placeholder="Enter search terms such as product name, description, type, etc..."
+                        />
+                    </div>
+                </form>
+                <!--./Query Search-->
 
-            <!--Product Listing-->
-            <b-card v-show="products" v-for="product in products" class="mb-3">
-                <b-media>
-                    <b-img-lazy :src="product.images[0].path" slot="aside" width="150" alt="Placeholder" />
-                    <router-link :to="{ name: 'ProductDetail', params: { id: product.product_id}}">
-                        <h3 class="mt-0 font-weight-bold">{{ product.name }} </h3>
-                    </router-link>
-                    <p>{{ product.description }}</p>
-                </b-media>
-            </b-card>
-            <!--./Product Listing-->
+                <!--Product Listing-->
+                <b-card v-if="products" v-for="product in products" class="mb-3">
+                    <b-media>
+                        <b-img-lazy :src="product.images[0].path" slot="aside" width="150" alt="Placeholder" />
+                        <router-link :to="{ name: 'ProductDetail', params: { id: product.product_id}}">
+                            <h3 class="mt-0 font-weight-bold">{{ product.name }} </h3>
+                        </router-link>
+                        <p>{{ product.description }}</p>
+                    </b-media>
+                </b-card>
+                <!--./Product Listing-->
 
-            <!--Product Search Listing-->
-            <b-card v-show="productsSearch" v-for="product in productsSearch" class="mb-3">
-                <b-media>
-                    <router-link :to="{ name: 'ProductDetail', params: { id: product.product_id}}">
-                        <h3 class="mt-0 font-weight-bold">{{ product.name }} </h3>
-                    </router-link>
-                    <b-list-group flush>
-                        <b-list-group-item class="text-capitalize">
-                            <strong>Product ID:</strong> {{ product.product_id }}
-                        </b-list-group-item>
-                        <b-list-group-item class="text-capitalize">
-                            <strong>Brand:</strong> {{ product.brand }}
-                        </b-list-group-item>
-                        <b-list-group-item class="text-capitalize">
-                            <strong>Type:</strong> {{ product.type }}
-                        </b-list-group-item>
-                        <b-list-group-item class="text-capitalize">
-                            <strong>Above Ground:</strong> {{ product.aboveground ? 'Above Ground' : 'Below Ground' }}
-                        </b-list-group-item>
-                    </b-list-group>
-                    <b-card-body>
-                        <p class="card-text">
-                            <strong>Description:</strong> {{ product.description }}
-                        </p>
-                    </b-card-body>
-                </b-media>
-            </b-card>
-            <!--./Product Search  Listing-->
+                <!--Product Search Listing-->
+                <b-card v-if="productsSearch" v-for="product in productsSearch" class="mb-3">
+                    <b-media>
+                        <router-link :to="{ name: 'ProductDetail', params: { id: product.product_id}}">
+                            <h3 class="mt-0 font-weight-bold">{{ product.name }} </h3>
+                        </router-link>
+                        <b-list-group flush>
+                            <b-list-group-item class="text-capitalize">
+                                <strong>Product ID:</strong> {{ product.product_id }}
+                            </b-list-group-item>
+                            <b-list-group-item class="text-capitalize">
+                                <strong>Brand:</strong> {{ product.brand }}
+                            </b-list-group-item>
+                            <b-list-group-item class="text-capitalize">
+                                <strong>Type:</strong> {{ product.type }}
+                            </b-list-group-item>
+                            <b-list-group-item class="text-capitalize">
+                                <strong>Above Ground:</strong> {{ product.aboveground }}
+                            </b-list-group-item>
+                        </b-list-group>
+                        <b-card-body>
+                            <p class="card-text">
+                                <strong>Description:</strong> {{ product.description }}
+                            </p>
+                        </b-card-body>
+                    </b-media>
+                </b-card>
+                <!--./Product Search  Listing-->
+            </b-row>
         </b-row>
         <!--./Products-->
 
@@ -119,6 +123,7 @@
                pagination: [],
                errors: [],
                search_query: '',
+               emptyCall: false,
                successfulCall: false,
                unsuccessfulCall: false
            }
