@@ -70,11 +70,17 @@ class EloquentProduct implements ProductRepository
         // TODO - Decouple into separate function
         if (isset($data['images'])) {
             foreach((array) $data['images'] as $imagePath) {
-                $image1 = ProductImage::firstOrNew(
-                    ['product_id' => $productID],
-                    ['path' => $imagePath]
-                );
-                $product->images()->save($image1);
+                $image1 = (new ProductImage)->where('path', '=', $imagePath)
+                                            ->where('product_id', '=', $productID);
+                // Add image
+                if (!$image1) {
+                    $image1 = new ProductImage([
+                            'product_id' => $productID,
+                            'path' => $imagePath
+                        ]
+                    );
+                    $product->images()->save($image1);
+                }
             }
         }
 

@@ -19,13 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('products', 'Product\ProductController', ['only' => [
     'index', 'show'
-]]);
+]])->middleware('tracker');
 
 Route::get('products/search/query', 'Product\ProductController@search')
     ->name('products.search');
 
 Route::get('tracker/visitors', 'Tracker\TrackerController@visitors')
-    ->name('tracker.visitors');
+    ->name('tracker.visitors')->middleware('tracker');
 
 Route::get('tracker/visitors/{id}', 'Tracker\TrackerController@visitorsBySessionId')
-    ->name('tracker.visitorsBySessionId');
+    ->name('tracker.visitorsBySessionId')->middleware('tracker');

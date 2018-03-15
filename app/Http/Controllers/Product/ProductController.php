@@ -5,6 +5,7 @@ namespace Leslie\Http\Controllers\Product;
 use Illuminate\Http\Request;
 use Leslie\Http\Controllers\Controller;
 use Leslie\Repositories\Product\ProductRepository;
+use Tracker;
 
 class ProductController extends Controller
 {

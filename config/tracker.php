@@ -44,7 +44,7 @@ return [
     ],
 
     /*
-     * The Do Not Track Ips is used to disable Tracker for some IP addresses:
+     * The Do Not Track Ips is used to disable TrackSession for some IP addresses:
      *
      *     '127.0.0.1', '192.168.1.1'
      *
@@ -91,10 +91,10 @@ return [
     'log_sql_queries' => false,
 
     /*
-     * If you prefer to store Tracker data on a different database or connection,
+     * If you prefer to store TrackSession data on a different database or connection,
      * you can set it here.
      *
-     * To avoid SQL queries log recursion, create a different connection for Tracker,
+     * To avoid SQL queries log recursion, create a different connection for TrackSession,
      * point it to the same database (or not) and forbid logging of this connection in
      * do_not_log_sql_queries_connections.
      */
@@ -103,9 +103,9 @@ return [
     /*
      * Forbid logging of SQL queries for some connections.
      *
-     * To avoid recursion, you better ignore Tracker connection here.
+     * To avoid recursion, you better ignore TrackSession connection here.
      *
-     * Please create a separate database connection for Tracker. It can hit
+     * Please create a separate database connection for TrackSession. It can hit
      * the same database of your application, but the connection itself
      * has to have a different name, so the package can ignore its own queries
      * and avoid recursion.
@@ -251,7 +251,7 @@ return [
     'user_model' => 'PragmaRX\Tracker\Vendor\Laravel\Models\User',
 
     /*
-     * You can use your own model for every single table Tracker has.
+     * You can use your own model for every single table TrackSession has.
      */
 
     'session_model' => 'PragmaRX\Tracker\Vendor\Laravel\Models\Session',

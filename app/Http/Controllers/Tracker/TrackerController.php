@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Leslie\Http\Controllers\Controller;
 use Leslie\Repositories\Tracker\TrackerRepository;
+use Tracker;
 
 class TrackerController extends Controller
 {
